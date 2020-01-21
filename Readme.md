@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Эльвира Ильясова](https://up.htmlacademy.ru/javascript/19/user/73441).
-* Наставник: `Неизвестно`.
+* Наставник: [Илья Соколов](https://htmlacademy.ru/profile/id53279).
 
 ---
 
