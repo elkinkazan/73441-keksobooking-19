@@ -8,12 +8,16 @@ var OBJECT_NUMBER = 9;
 var MAX_X = 1100;
 var MAX_Y = 630;
 var MIN_Y = 130;
+var PHOTOS_LENGTH = 3;
 
-var getPhotos = function (num) {
-  if (num === 0) {
-    num = 1;
+var getPhotos = function () {
+  var photos = [];
+
+  for (var i = 0; i < PHOTOS_LENGTH; i++) {
+    photos[i] = 'http://o0.github.io/assets/images/tokyo/hotel' + (i + 1) + '.jpg';
   }
-  return 'http://o0.github.io/assets/images/tokyo/hotel' + num + '.jpg';
+
+  return photos;
 };
 
 var getRandomInteger = function (max) {
@@ -39,7 +43,7 @@ var generateArray = function () {
         features: FEATURES_OFFER.slice(0, getRandomInteger(FEATURES_OFFER.length - 1)),
         description: 'Description' + (i + 1),
         //  photos: PHOTOS[getRandomInteger(PHOTOS.length - 1)],
-        photos: getPhotos(getRandomInteger(3))
+        photos: getPhotos[getRandomInteger(PHOTOS_LENGTH - 1)]
       },
       location: {
         x: getRandomInteger(MAX_X),
@@ -56,6 +60,16 @@ var deleteClass = function (sectionName, className) {
   sectionNameList.classList.remove(className);
 };
 
+var generatePinView = function (iWidth, iHeight, Template, currentElement) {
+  var similarElement = Template.cloneNode(true);
+  var locationX = currentElement.location.x + iWidth;
+  var locationY = currentElement.location.y + iHeight;
+  similarElement.style = 'left:' + locationX + 'px; top: ' + locationY + 'px;';
+  similarElement.style.src = currentElement.author.avatar;
+  similarElement.style.alt = currentElement.offer.title;
+  return similarElement;
+};
+
 var generateDOMElement = function () {
   var currentArray = generateArray();
   var similarList = document.querySelector('.map__pins');
@@ -63,15 +77,12 @@ var generateDOMElement = function () {
   var similarTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   var imgWidth = similarTemplate.querySelector('img').width;
   var imgHeight = similarTemplate.querySelector('img').height;
+
   for (var i = 0; i < 8; i++) {
-    var similarElement = similarTemplate.cloneNode(true);
-    var locationX = currentArray[i].location.x + imgWidth;
-    var locationY = currentArray[i].location.y + imgHeight;
-    similarElement.style = 'left:' + locationX + 'px; top: ' + locationY + 'px;';
-    similarElement.style.src = currentArray[i].author.avatar;
-    similarElement.style.alt = currentArray[i].offer.title;
-    fragment.appendChild(similarElement);
+    var pin = generatePinView(imgWidth, imgHeight, similarTemplate, currentArray[i]);
+    fragment.appendChild(pin);
   }
+
   similarList.appendChild(fragment);
 };
 
