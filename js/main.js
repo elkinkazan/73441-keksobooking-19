@@ -4,7 +4,6 @@ var TYPE_OFFER = ['palace', 'flat', 'house', 'bungalo'];
 var CHECK_OFFER = ['12:00', '13:00', '14:00'];
 var FEATURES_OFFER = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var OBJECT_NUMBER = 9;
-// var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 var MAX_X = 1100;
 var MAX_Y = 630;
 var MIN_Y = 130;
@@ -26,7 +25,10 @@ var getRandomInteger = function (max) {
 
 var generateArray = function () {
   var arr = [];
+
   for (var i = 0; i < OBJECT_NUMBER; i++) {
+    var num1 = getRandomInteger(FEATURES_OFFER.length - 1);
+    var num2 = getRandomInteger(FEATURES_OFFER.length - 1);
     var currentObject = {
       author: {
         avatar: 'img/avatars/user0' + (i + 1) + '.png'
@@ -40,10 +42,9 @@ var generateArray = function () {
         guests: getRandomInteger(10),
         checkin: CHECK_OFFER[getRandomInteger(CHECK_OFFER.length - 1)],
         checkout: CHECK_OFFER[getRandomInteger(CHECK_OFFER.length - 1)],
-        features: FEATURES_OFFER.slice(0, getRandomInteger(FEATURES_OFFER.length - 1)),
+        features: FEATURES_OFFER.slice(Math.min(num1, num2), Math.max(num1, num2)),
         description: 'Description' + (i + 1),
-        //  photos: PHOTOS[getRandomInteger(PHOTOS.length - 1)],
-        photos: getPhotos[getRandomInteger(PHOTOS_LENGTH - 1)]
+        photos: getPhotos()[getRandomInteger(PHOTOS_LENGTH - 1)]
       },
       location: {
         x: getRandomInteger(MAX_X),
