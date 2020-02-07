@@ -1,13 +1,20 @@
 'use strict';
 
-var TYPE_OFFER = ['palace', 'flat', 'house', 'bungalo', 'palace', 'flat', 'house', 'bungalo'];
+var TYPE_OFFER = ['palace', 'flat', 'house', 'bungalo'];
 var CHECK_OFFER = ['12:00', '13:00', '14:00'];
 var FEATURES_OFFER = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var OBJECT_NUMBER = 9;
-var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
+// var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 var MAX_X = 1100;
 var MAX_Y = 630;
 var MIN_Y = 130;
+
+var getPhotos = function (num) {
+  if (num === 0) {
+    num = 1;
+  }
+  return 'http://o0.github.io/assets/images/tokyo/hotel' + num + '.jpg';
+};
 
 var getRandomInteger = function (max) {
   return Math.floor(Math.random() * max);
@@ -15,24 +22,24 @@ var getRandomInteger = function (max) {
 
 var generateArray = function () {
   var arr = [];
-  var j = 1;
   for (var i = 0; i < OBJECT_NUMBER; i++) {
     var currentObject = {
       author: {
-        avatar: 'img/avatars/user0' + j + '.png'
+        avatar: 'img/avatars/user0' + (i + 1) + '.png'
       },
       offer: {
-        title: 'Title' + j,
+        title: 'Title' + (i + 1),
         address: '' + getRandomInteger(1000) + ',' + getRandomInteger(1000) + '',
         price: getRandomInteger(10000),
-        type: TYPE_OFFER[i],
+        type: TYPE_OFFER[getRandomInteger(TYPE_OFFER.length - 1)],
         rooms: getRandomInteger(10),
         guests: getRandomInteger(10),
         checkin: CHECK_OFFER[getRandomInteger(CHECK_OFFER.length - 1)],
         checkout: CHECK_OFFER[getRandomInteger(CHECK_OFFER.length - 1)],
         features: FEATURES_OFFER.slice(0, getRandomInteger(FEATURES_OFFER.length - 1)),
-        description: 'Description' + j,
-        photos: PHOTOS[getRandomInteger(PHOTOS.length - 1)],
+        description: 'Description' + (i + 1),
+        //  photos: PHOTOS[getRandomInteger(PHOTOS.length - 1)],
+        photos: getPhotos(getRandomInteger(3))
       },
       location: {
         x: getRandomInteger(MAX_X),
@@ -40,7 +47,6 @@ var generateArray = function () {
       },
     };
     arr[i] = currentObject;
-    j++;
   }
   return arr;
 };
