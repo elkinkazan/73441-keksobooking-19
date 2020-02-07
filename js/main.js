@@ -9,7 +9,7 @@ var MAX_Y = 630;
 var MIN_Y = 130;
 var PHOTOS_LENGTH = 3;
 
-var getPhotos = function () {
+var createPhotos = function () {
   var photos = [];
 
   for (var i = 0; i < PHOTOS_LENGTH; i++) {
@@ -44,7 +44,7 @@ var generateArray = function () {
         checkout: CHECK_OFFER[getRandomInteger(CHECK_OFFER.length - 1)],
         features: FEATURES_OFFER.slice(Math.min(num1, num2), Math.max(num1, num2)),
         description: 'Description' + (i + 1),
-        photos: getPhotos()[getRandomInteger(PHOTOS_LENGTH - 1)]
+        photos: createPhotos()[getRandomInteger(PHOTOS_LENGTH - 1)]
       },
       location: {
         x: getRandomInteger(MAX_X),
