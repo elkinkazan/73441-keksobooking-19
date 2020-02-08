@@ -29,6 +29,7 @@ var generateArray = function () {
   for (var i = 0; i < OBJECT_NUMBER; i++) {
     var num1 = getRandomInteger(FEATURES_OFFER.length - 1);
     var num2 = getRandomInteger(FEATURES_OFFER.length - 1);
+    var ph = getRandomInteger(PHOTOS_LENGTH - 1);
     var currentObject = {
       author: {
         avatar: 'img/avatars/user0' + (i + 1) + '.png'
@@ -44,7 +45,7 @@ var generateArray = function () {
         checkout: CHECK_OFFER[getRandomInteger(CHECK_OFFER.length - 1)],
         features: FEATURES_OFFER.slice(Math.min(num1, num2), Math.max(num1, num2)),
         description: 'Description' + (i + 1),
-        photos: createPhotos()[getRandomInteger(PHOTOS_LENGTH - 1)]
+        photos: createPhotos().slice(ph)
       },
       location: {
         x: getRandomInteger(MAX_X),
