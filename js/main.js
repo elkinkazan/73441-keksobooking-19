@@ -8,6 +8,8 @@ var MAX_X = 1100;
 var MAX_Y = 630;
 var MIN_Y = 130;
 var PHOTOS_LENGTH = 3;
+var FEAT_LENGTH = FEATURES_OFFER.length;
+var CHECK_LENGTH = CHECK_OFFER.length;
 
 var createPhotos = function () {
   var photos = [];
@@ -27,8 +29,8 @@ var generateArray = function () {
   var arr = [];
 
   for (var i = 0; i < OBJECT_NUMBER; i++) {
-    var num1 = getRandomInteger(FEATURES_OFFER.length);
-    var num2 = getRandomInteger(FEATURES_OFFER.length);
+    var num1 = getRandomInteger(FEAT_LENGTH);
+    var num2 = getRandomInteger(FEAT_LENGTH);
     var ph = getRandomInteger(PHOTOS_LENGTH);
     var currentObject = {
       author: {
@@ -41,8 +43,8 @@ var generateArray = function () {
         type: TYPE_OFFER[getRandomInteger(TYPE_OFFER.length)],
         rooms: getRandomInteger(10),
         guests: getRandomInteger(10),
-        checkin: CHECK_OFFER[getRandomInteger(CHECK_OFFER.length)],
-        checkout: CHECK_OFFER[getRandomInteger(CHECK_OFFER.length)],
+        checkin: CHECK_OFFER[getRandomInteger(CHECK_LENGTH)],
+        checkout: CHECK_OFFER[getRandomInteger(CHECK_LENGTH)],
         features: FEATURES_OFFER.slice(Math.min(num1, num2), Math.max(num1, num2)),
         description: 'Description' + (i + 1),
         photos: createPhotos().slice(ph)
@@ -88,8 +90,10 @@ var offerType = function (oType) {
 
 var displayPhoto = function (cElement, cArray) {
   var exampleImg = cElement.querySelector('.popup__photos');
+  exampleImg.querySelector('img').src = cArray.offer.photos[0];
   var imgFragment = document.createDocumentFragment();
-  for (var i = 0; i < cArray.offer.photos.length; i++) {
+  var photoLength = cArray.offer.photos.length;
+  for (var i = 1; i < photoLength; i++) {
     var imgTemplate = exampleImg.querySelector('img').cloneNode(true);
     imgTemplate.src = cArray.offer.photos[i];
     imgFragment.appendChild(imgTemplate);
@@ -118,7 +122,7 @@ var generateCard = function (cTemplate, curArray) {
 var generatePins = function () {
   var currentArray = generateArray();
   var similarList = document.querySelector('.map__pins');
-  var mapSection = document.querySelector('.map__pins');
+  var mapSection = document.querySelector('.map__filters-container');
   var fragment = document.createDocumentFragment();
   var cardfragment = document.createDocumentFragment();
   var similarTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
@@ -127,13 +131,15 @@ var generatePins = function () {
   var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
   for (var i = 0; i < 8; i++) {
-    var pin = generatePinView(imgWidth, imgHeight, similarTemplate, currentArray[i]);
-    var card = generateCard(cardTemplate, currentArray[i]);
-    fragment.appendChild(pin);
-    cardfragment.appendChild(card);
+    if (!(currentArray[i].offer.rooms === 0 || currentArray[i].offer.guests === 0)) {
+      var pin = generatePinView(imgWidth, imgHeight, similarTemplate, currentArray[i]);
+      var card = generateCard(cardTemplate, currentArray[i]);
+      fragment.appendChild(pin);
+      cardfragment.appendChild(card);
+    }
   }
   similarList.appendChild(fragment);
-  mapSection.appendChild(cardfragment);
+  mapSection.before(cardfragment);
 };
 
 
