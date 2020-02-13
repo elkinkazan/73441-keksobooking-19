@@ -3,7 +3,7 @@
 var TYPE_OFFER = ['palace', 'flat', 'house', 'bungalo'];
 var CHECK_OFFER = ['12:00', '13:00', '14:00'];
 var FEATURES_OFFER = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-var OBJECT_NUMBER = 9;
+var OBJECT_NUMBER = 8;
 var MAX_X = 1100;
 var MAX_Y = 630;
 var MIN_Y = 130;
@@ -133,15 +133,19 @@ var generatePins = function () {
   var imgHeight = similarTemplate.querySelector('img').height;
   var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
-  for (var i = 0; i < 8; i++) {
+  for (var i = 0; i < OBJECT_NUMBER; i++) {
+
     if (!(currentArray[i].offer.rooms === 0 || currentArray[i].offer.guests === 0)) {
       var pin = generatePinView(imgWidth, imgHeight, similarTemplate, currentArray[i]);
-      var card = generateCard(cardTemplate, currentArray[i]);
       fragment.appendChild(pin);
-      cardfragment.appendChild(card);
     }
+
   }
+
   similarList.appendChild(fragment);
+
+  var card = generateCard(cardTemplate, currentArray[0]);
+  cardfragment.appendChild(card);
   mapSection.before(cardfragment);
 };
 
