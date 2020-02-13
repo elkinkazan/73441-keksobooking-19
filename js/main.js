@@ -41,8 +41,8 @@ var generateArray = function () {
         address: '' + getRandomInteger(1000) + ',' + getRandomInteger(1000) + '',
         price: getRandomInteger(10000),
         type: TYPE_OFFER[getRandomInteger(TYPE_OFFER.length)],
-        rooms: getRandomInteger(10),
-        guests: getRandomInteger(10),
+        rooms: getRandomInteger(10) + 1,
+        guests: getRandomInteger(3) + 1,
         checkin: CHECK_OFFER[getRandomInteger(CHECK_LENGTH)],
         checkout: CHECK_OFFER[getRandomInteger(CHECK_LENGTH)],
         features: FEATURES_OFFER.slice(Math.min(featNum1, featNum2), Math.max(featNum1, featNum2)),
@@ -111,14 +111,31 @@ var generateCard = function (cTemplate, curArray) {
   cardElement.querySelector('.popup__text--address').textContent = curOffer.address;
   cardElement.querySelector('.popup__text--price').textContent = curOffer.price + '₽/ночь';
   cardElement.querySelector('.popup__type').textContent = offerType(curOffer.type);
-  cardElement.querySelector('.popup__text--capacity').textContent = curOffer.rooms +
-  ' комнаты для ' + curOffer.guests + ' гостей';
+
+  if (curOffer.rooms === 1) {
+    cardElement.querySelector('.popup__text--capacity').textContent = curOffer.rooms +
+    ' комната для ';
+  } else if (curOffer.rooms < 5) {
+    cardElement.querySelector('.popup__text--capacity').textContent = curOffer.rooms +
+    ' комнаты для ';
+  } else {
+    cardElement.querySelector('.popup__text--capacity').textContent = curOffer.rooms +
+    ' комнат для ';
+  }
+
+  if (curOffer.guests === 1) {
+    cardElement.querySelector('.popup__text--capacity').textContent += curOffer.guests + ' гостя';
+  } else {
+    cardElement.querySelector('.popup__text--capacity').textContent += curOffer.guests + ' гостей';
+  }
+
   cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + curOffer.checkin
   + ', выезд до ' + curOffer.checkout;
   cardElement.querySelector('.popup__description').textContent = curOffer.description;
   cardElement.querySelector('.popup__features').textContent = curOffer.features;
   cardElement.querySelector('.popup__avatar').src = curArray.author.avatar;
   displayPhoto(cardElement, curArray.offer.photos);
+
   return cardElement;
 };
 
@@ -135,17 +152,17 @@ var generatePins = function () {
 
   for (var i = 0; i < OBJECT_NUMBER; i++) {
 
-    if (!(currentArray[i].offer.rooms === 0 || currentArray[i].offer.guests === 0)) {
-      var pin = generatePinView(imgWidth, imgHeight, similarTemplate, currentArray[i]);
-      fragment.appendChild(pin);
-    }
+    var pin = generatePinView(imgWidth, imgHeight, similarTemplate, currentArray[i]);
+    fragment.appendChild(pin);
 
   }
 
   similarList.appendChild(fragment);
 
+
   var card = generateCard(cardTemplate, currentArray[0]);
   cardfragment.appendChild(card);
+
   mapSection.before(cardfragment);
 };
 
