@@ -16,7 +16,7 @@ var pageActivated = false;
 var ENTER_KEY = 'Enter';
 var MAP_PIN_MAIN = document.querySelector('.map__pin--main');
 var ADDRESS_INPUT = document.querySelector('#address');
-var MAP_PIN_MAIN_AFTER = getComputedStyle(MAP_PIN_MAIN,':after');
+var MAP_PIN_MAIN_AFTER = getComputedStyle(MAP_PIN_MAIN, ':after');
 
 
 // var createPhotos = function () {
@@ -183,8 +183,6 @@ var activateAddress = function () {
   var clientRect = MAP_PIN_MAIN.getBoundingClientRect();
   ADDRESS_INPUT.value = Math.floor(clientRect.left + window.pageXOffset + clientRect.width / 2) + ', '
    + Math.floor(clientRect.top + window.pageYOffset + clientRect.height / 2);
-  console.log(MAP_PIN_MAIN_AFTER.top);
-  console.log(MAP_PIN_MAIN_AFTER.left);
 };
 
 var disactivateSection = function (exClass) {
