@@ -190,7 +190,7 @@ var disactivateSection = function (exClass) {
   var chosenSection = chosenForm.querySelectorAll('fieldset');
   var chosenSectionLength = chosenSection.length;
   for (var a = 0; a < chosenSectionLength; a++) {
-    chosenSection[a].classList.add('disabled');
+    chosenSection[a].disabled = true;
   }
 };
 
@@ -199,7 +199,7 @@ var activateSection = function (exClass) {
   var chosenSection = chosenForm.querySelectorAll('fieldset');
   var chosenSectionLength = chosenSection.length;
   for (var a = 0; a < chosenSectionLength; a++) {
-    chosenSection[a].classList.remove('disabled');
+    chosenSection[a].disabled = false;
   }
 };
 
