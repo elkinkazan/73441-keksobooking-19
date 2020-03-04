@@ -190,7 +190,6 @@ var generateCardElement = function (arr) {
     var mapCard = document.querySelector('.map__card');
     if (evt.key === ENTER_KEY) {
       mapCard.remove();
-    // }
     }
   });
 
